@@ -1,5 +1,5 @@
 {
-  "name": "action-builder",
+  "name": "bot-action",
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
@@ -20,9 +20,9 @@
   "author": "Max Kotsiuruba",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/A5KET/action-builder/issues"
+    "url": "https://github.com/A5KET/bot-action/issues"
   },
-  "homepage": "https://github.com/A5KET/action-builder#readme",
+  "homepage": "https://github.com/A5KET/bot-action#readme",
   "description": "",
   "devDependencies": {
     "@types/jest": "^29.5.14",
