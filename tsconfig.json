@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "module": "UMD",
+        "strict": true,
+        "target": "ES6",
+        "skipLibCheck": true,
+        "esModuleInterop": true
+    },
+    "include": ["index.ts"],
+    "exclude": ["node_modules"]
+}
