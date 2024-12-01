@@ -20,6 +20,7 @@ export interface ActionBuilderState<P extends Record<string, any>> {
 }
 
 export interface ActionBuilderParam<V = any> {
+    readonly name: string
     readonly order: number
     readonly pattern: string
     readonly value?: V
@@ -85,6 +86,12 @@ export class ActionBuilder<
     }
 
     withParam<K extends string>(param: K, pattern: string) {
+        const paramState: ActionBuilderParam = {
+            name: param,
+            pattern,
+            order: this.getNextParamOrderCounter()
+        }
+
         return this.new<
             Equals<P, Record<never, any>> extends true
             ? Record<K, any>
@@ -93,10 +100,7 @@ export class ActionBuilder<
             ...this.state,
             params: {
                 ...this.state.params,
-                [param]: {
-                    pattern,
-                    order: this.getNextParamOrderCounter(),
-                }
+                [param]: paramState
             }
         })
     }
@@ -105,11 +109,25 @@ export class ActionBuilder<
         return this.state.params[param]
     }
 
+    getParamOrder<K extends keyof P>(param: K) {
+        const paramState = this.state.params[param]
+
+        if (!paramState) {
+            throw new Error(`Unknown param. Received ${String(param)}`)
+        }
+
+        return paramState.order
+    }
+
+    getParamValue<K extends keyof P>(param: K) {
+        return this.state.params[param]?.value
+    }
+
     withParamValue<K extends keyof P, V extends P[K]>(param: K, value: V) {
         const paramState = this.state.params[param]
 
-        if (!param) {
-            throw new Error(`Unknown param. Received ${String(name)}. Expected one of ${this.state.params}`)
+        if (!paramState) {
+            throw new Error(`Unknown param. Received ${String(param)}`)
         }
 
         return this.new<P>({
@@ -119,6 +137,25 @@ export class ActionBuilder<
                 [param]: {
                     ...paramState,
                     value
+                }
+            }
+        })
+    }
+
+    withParamPattern<K extends keyof P>(param: K, pattern: string) {
+        const paramState = this.state.params[param]
+
+        if (!paramState) {
+            throw new Error(`Unknown param. Received ${String(param)}`)
+        }
+
+        return this.new<P>({
+            ...this.state,
+            params: {
+                ...this.state.params,
+                [param]: {
+                    ...paramState,
+                    pattern
                 }
             }
         })
