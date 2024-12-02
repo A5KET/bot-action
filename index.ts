@@ -161,6 +161,10 @@ export class ActionBuilder<
         })
     }
 
+    hasParam<K extends keyof P | string>(param: K): this is ActionBuilder<Equals<P, Record<never, any>> extends true ? Record<K, any> : P & Record<K, any>> {
+        return param in this.state.params
+    }
+
     withAnyParams() {
         return this.new({
             ...this.state,
