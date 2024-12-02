@@ -19,6 +19,7 @@ export interface ActionBuilderState<P extends Record<string, any>> {
     readonly isAtEnd: boolean
 }
 
+
 export interface ActionBuilderParam<V = any> {
     readonly name: string
     readonly order: number
@@ -69,7 +70,7 @@ export class ActionBuilder<
 
     withName(name: string) {
         if (typeof name !== 'string') {
-            throw new Error(`Action name should be a string. Received ${typeof name}`)
+            throw new Error(`Action name should be a string. Received "${typeof name}"`)
         }
 
         return this.new({
@@ -113,7 +114,7 @@ export class ActionBuilder<
         const paramState = this.state.params[param]
 
         if (!paramState) {
-            throw new Error(`Unknown param. Received ${String(param)}`)
+            throw new Error(`Unknown param name. Received "${String(param)}"`)
         }
 
         return paramState.order
@@ -127,7 +128,7 @@ export class ActionBuilder<
         const paramState = this.state.params[param]
 
         if (!paramState) {
-            throw new Error(`Unknown param. Received ${String(param)}`)
+            throw new Error(`Unknown param name. Received "${String(param)}"`)
         }
 
         return this.new<P>({
@@ -146,7 +147,7 @@ export class ActionBuilder<
         const paramState = this.state.params[param]
 
         if (!paramState) {
-            throw new Error(`Unknown param. Received ${String(param)}`)
+            throw new Error(`Unknown param name. Received "${String(param)}"`)
         }
 
         return this.new<P>({
@@ -213,9 +214,9 @@ export class ActionBuilder<
     asAction() {
         const params = this.state.params
 
-        for (const param of Object.values(params)) {
+        for (const param of Object.values<ActionBuilderParam>(params)) {
             if (param.value === undefined) {
-                throw new Error(`Unset param ${param}`)
+                throw new Error(`Unset action param "${param.name}"`)
             }
         }
 
