@@ -60,7 +60,7 @@ export class ActionBuilder<
 
     protected getNextParamOrderCounter() {
         const params = this.state.params
-        const currentMaxOrder = Object.values(params).reduce((prev, cur) => Math.max(prev, cur.order), this.options.matchedParamOrderOffset)
+        const currentMaxOrder = Object.values(params).reduce((prev, cur) => Math.max(prev, cur.order), this.options.matchedParamOrderOffset - 1)
 
         return currentMaxOrder + 1
     }
