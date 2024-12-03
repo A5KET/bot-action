@@ -60,8 +60,9 @@ export class ActionBuilder<
 
     protected getNextParamOrderCounter() {
         const params = this.state.params
+        const currentMaxOrder = Object.values(params).reduce((prev, cur) => Math.max(prev, cur.order), this.options.matchedParamOrderOffset)
 
-        return Object.values(params).reduce((prev, cur) => Math.max(prev, cur.order), 0)
+        return currentMaxOrder + 1
     }
 
     new<NP extends Record<string, any> = P>(state: ActionBuilderState<NP>) {
