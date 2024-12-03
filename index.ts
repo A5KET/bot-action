@@ -48,8 +48,8 @@ const defaultOptions: ActionBuilderOptions = {
 export class ActionBuilder<
     P extends Record<string, any> = Record<never, any>
 > {
-    readonly options: ActionBuilderOptions
-    readonly state: ActionBuilderState<P>
+    protected readonly options: ActionBuilderOptions
+    protected readonly state: ActionBuilderState<P>
     constructor(
         options: Partial<ActionBuilderOptions> = {},
         state: Partial<ActionBuilderState<P>> = {}
