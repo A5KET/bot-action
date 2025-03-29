@@ -11,7 +11,7 @@ export interface ActionBuilderOptions {
 
 
 export interface ActionBuilderState<P extends Record<string, any>> {
-    readonly names: string[]
+    readonly names: readonly string[]
     readonly params: { [K in keyof P]: ActionBuilderParam<P[K]> }
     readonly isAnyNames: boolean
     readonly isAnyParams: boolean
