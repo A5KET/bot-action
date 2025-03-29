@@ -80,6 +80,17 @@ export class ActionBuilder<
         })
     }
 
+    withRootName(name: string) {
+        if (typeof name !== 'string') {
+            throw new Error(`Action name should be a string. Received "${typeof name}"`)
+        }
+
+        return this.new({
+            ...this.state,
+            names: [name, ...this.state.names]
+        })
+    }
+
     withAnyNames() {
         return this.new({
             ...this.state,
